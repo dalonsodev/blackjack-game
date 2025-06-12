@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "BlackJack Game App",
+  "short_name": "BlackJack",
   "icons": [
     {
       "src":"favicon/android-chrome-192x192.png", "sizes":"192x192", "type":"image/png"

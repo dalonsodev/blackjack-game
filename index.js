@@ -1,70 +1,113 @@
-const messageEl = document.getElementById("message-el")
-const sumEl = document.getElementById("sum-el")
-const cardsEl = document.getElementById("cards-el")
-const playerEl = document.getElementById("player-el")
-const startBtn = document.getElementById("start-btn")
-const newCardBtn = document.getElementById("new-card-btn")
+// Initial game state
+const gameState = {
+   cards: [],
+   sum: 0,
+   message: "",
+   hasBlackJack: false,
+   isAlive: false,
+   deck: []
+}
 
-let cards = []
-let sum = 0
-let isAlive = false
-let hasBlackJack = false
-let message = ""
-let player = {
-   name: "David",
-   chips: 200
+// grab elements to work with
+const messageEl = document.getElementById("message-el")
+const cardsEl = document.getElementById("cards-el")
+const sumEl = document.getElementById("sum-el")
+const resetBtn = document.getElementById("reset-btn")
+
+// Get the card's suit
+function getSuitClass(cardName) {
+   if (cardName.endsWith("♠")) return "suit-spades"
+   if (cardName.endsWith("♣")) return "suit-clubs"
+   if (cardName.endsWith("♥")) return "suit-hearts"
+   if (cardName.endsWith("♦")) return "suit-diamonds"
+   return ""
+}
+
+// Create a random deck
+function createDeck() {
+   const suits = ["♠", "♣", "♥", "♦"]
+   const values = [
+      {name: "A", value: 11},
+      {name: "2", value: 2},
+      {name: "3", value: 3},
+      {name: "4", value: 4},
+      {name: "5", value: 5},
+      {name: "6", value: 6},
+      {name: "7", value: 7},
+      {name: "8", value: 8},
+      {name: "9", value: 9},
+      {name: "10", value: 10},
+      {name: "J", value: 10},
+      {name: "Q", value: 10},
+      {name: "K", value: 10},
+   ]
+   gameState.deck = []
+   for (let suit of suits) {
+      for (let value of values) {
+         gameState.deck.push({name: `${value.name}${suit}`, value: value.value})
+      }
+   }
+   // Shuffle deck
+   gameState.deck.sort(() => Math.random() - 0.5)
 }
 
 
-playerEl.textContent = `${player.name}: $${player.chips}`
-
 function getRandomCard() {
-   const randomNumber = Math.floor(Math.random() * 13) + 1
-   if (randomNumber > 10) {
-      return 10
-   } else if (randomNumber === 1) {
-      return 11
-   } else {
-      return randomNumber
+   if (gameState.deck.length === 0) createDeck()
+   return gameState.deck.pop()
+}
+
+function renderGame() {
+   const cardsHtml = gameState.cards.map( card => 
+      `<span class="${getSuitClass(card.name)}">${card.name}</span>`)
+      .join(" · ")
+   cardsEl.innerHTML = `Cards: ${cardsHtml}`
+   gameState.sum = gameState.cards.reduce((sum, card) => sum + card.value, 0)
+   sumEl.textContent = `Sum: ${gameState.sum}`
+   
+   if (gameState.sum <= 20) {
+      gameState.message = "Do you want to draw a new card?"
    }
+   else if (gameState.sum === 21) {
+      gameState.message = "You've got Blackjack!"
+      gameState.hasBlackJack = true
+   }
+   else {
+      gameState.message = "You're out of the game!"
+      gameState.isAlive = false
+   }
+   messageEl.textContent = gameState.message
 }
 
 function startGame() {
-   isAlive = true
-   const firstCard = getRandomCard()
-   const secondCard = getRandomCard()
-   cards = [firstCard, secondCard]
-   sum = firstCard + secondCard
+   gameState.isAlive = true
+   gameState.hasBlackJack = false
+   gameState.cards = [getRandomCard(), getRandomCard()]
+   resetBtn.classList.remove("hidden")
    renderGame()
 }
 
 function newCard() {
-   if (isAlive === true && hasBlackJack === false) {
-      const card = getRandomCard()
-      sum += card
-      cards.push(card)
-      renderGame()        
+   if (gameState.isAlive && !gameState.hasBlackJack) {
+      gameState.cards.push(getRandomCard())
+      renderGame()
    }
 }
 
-function renderGame() {
+function resetGame() {
+   gameState.cards = []
+   gameState.sum = 0
+   gameState.message = ""
+   gameState.isAlive = false
+   gameState.hasBlackJack = false
+   messageEl.textContent = "Want to play a round?"
    cardsEl.textContent = "Cards: "
-   for (let i = 0; i < cards.length; i++) {
-      cardsEl.textContent += cards[i] + " "
-   }
-   
-   sumEl.textContent = `Sum: ${sum}`
-   if (sum <= 20) {
-      message = "Do you want to draw a new card?"
-   } else if (sum === 21) {
-      message = "You've got Blackjack!"
-      hasBlackJack = true
-   } else {
-      message = "You're out of the game!"
-      isAlive = false
-   }
-   messageEl.textContent = message
+   sumEl.textContent = "Sum: "
+   resetBtn.classList.add("hidden")
 }
 
-startBtn.addEventListener("click", startGame)
-newCardBtn.addEventListener("click", newCard)
+document.getElementById("start-btn").addEventListener("click", startGame)
+document.getElementById("new-card-btn").addEventListener("click", newCard)
+resetBtn.addEventListener("click", resetGame)
+
+resetGame()

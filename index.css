@@ -31,6 +31,12 @@ h1 {
     font-style: italic;
 }
 
+#reset-btn {
+   border: 1px solid goldenrod;
+   background-color: transparent;
+   color: goldenrod;
+}
+
 button {
     color: #016f32;
     width: 150px;
@@ -42,4 +48,25 @@ button {
     border-radius: 2px;
     margin-bottom: 3px;
     margin-top: 3px;
+}
+
+#cards-el span {
+   font-size: 1.2rem;
+   text-shadow: 0 0 10px goldenrod;
+}
+
+/* ---- Utility ---- */
+
+.hidden {
+   display: none;
+}
+
+.suit-hearts,
+.suit-diamonds {
+   color: rgb(152, 19, 19);
+}
+
+.suit-spades, 
+.suit-clubs {
+   color: rgb(8, 8, 8);
 }

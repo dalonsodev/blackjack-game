@@ -3,7 +3,7 @@ const sumEl = document.getElementById("sum-el")
 const cardsEl = document.getElementById("cards-el")
 const playerEl = document.getElementById("player-el")
 const startBtn = document.getElementById("start-btn")
-const newCardBtn = document.getElementById("new-card")
+const newCardBtn = document.getElementById("new-card-btn")
 
 let cards = []
 let sum = 0
@@ -15,10 +15,11 @@ let player = {
    chips: 200
 }
 
-playerEl.textContent = player.name + ": $" + player.chips
+
+playerEl.textContent = `${player.name}: $${player.chips}`
 
 function getRandomCard() {
-   const randomNumber = Math.floor( Math.random() * 13 ) + 1
+   const randomNumber = Math.floor(Math.random() * 13) + 1
    if (randomNumber > 10) {
       return 10
    } else if (randomNumber === 1) {
@@ -52,7 +53,7 @@ function renderGame() {
       cardsEl.textContent += cards[i] + " "
    }
    
-   sumEl.textContent = "Sum: " + sum
+   sumEl.textContent = `Sum: ${sum}`
    if (sum <= 20) {
       message = "Do you want to draw a new card?"
    } else if (sum === 21) {

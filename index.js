@@ -14,7 +14,7 @@ const cardsEl = document.getElementById("cards-el")
 const sumEl = document.getElementById("sum-el")
 const resetBtn = document.getElementById("reset-btn")
 
-// Get the card's suit
+// Get the card's suit to style with css (black or red depending on suit)
 function getSuitClass(cardName) {
    if (cardName.endsWith("♠")) return "suit-spades"
    if (cardName.endsWith("♣")) return "suit-clubs"

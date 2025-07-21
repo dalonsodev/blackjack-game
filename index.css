@@ -39,15 +39,16 @@ h1 {
 
 button {
     color: #016f32;
-    width: 150px;
+    width: 60%;
     background: goldenrod;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    /* padding-top: 7px;
+    padding-bottom: 7px; */
+    padding: 1em 2em;
     font-weight: bold;
     border: none;
     border-radius: 2px;
-    margin-bottom: 3px;
-    margin-top: 3px;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
 }
 
 #cards-el span {

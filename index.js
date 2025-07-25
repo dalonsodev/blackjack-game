@@ -59,8 +59,8 @@ function getRandomCard() {
 
 function renderGame() {
    const cardsHtml = gameState.cards.map( card => 
-      `<span class="${getSuitClass(card.name)}">${card.name}</span>`)
-      .join(" · ")
+      `<span class="card ${getSuitClass(card.name)}">${card.name}</span>`)
+      .join(" ")
    cardsEl.innerHTML = `Cards: ${cardsHtml}`
    gameState.sum = gameState.cards.reduce((sum, card) => sum + card.value, 0)
    sumEl.textContent = `Sum: ${gameState.sum}`

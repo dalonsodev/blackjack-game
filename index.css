@@ -53,7 +53,6 @@ button {
 
 #cards-el span {
    font-size: 1.2rem;
-   text-shadow: 0 0 10px goldenrod;
 }
 
 /* ---- Utility ---- */
@@ -61,6 +60,13 @@ button {
 .hidden {
    visibility: hidden;
    opacity: 0;
+}
+
+.card {
+   background: white;
+   padding: 10px 2px;
+   border-radius: 3px;
+   margin-right: 5px;
 }
 
 .suit-hearts,
